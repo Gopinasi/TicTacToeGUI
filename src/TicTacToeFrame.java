@@ -29,15 +29,15 @@ public class TicTacToeFrame extends JFrame {
         setLocation(width, height);
 
         createTopPanel();
-        topPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)); // Add padding
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         mainPanel.add(topPanel, BorderLayout.NORTH);
 
         createGridPanel();
-        gridPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
+        gridPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         mainPanel.add(gridPanel, BorderLayout.CENTER);
 
         createControlPanel();
-        controlPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
+        controlPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         mainPanel.add(controlPanel, BorderLayout.SOUTH);
 
         add(mainPanel);
@@ -64,34 +64,33 @@ public class TicTacToeFrame extends JFrame {
             for (int col = 0; col < COL; col++) {
 
                 buttons[row][col] = new JButton(" ");
-                buttons[row][col].setFont(new Font("Serif", Font.PLAIN, 60)); // Set font size for buttons
-                buttons[row][col].setFocusPainted(false); // Remove focus border
-                buttons[row][col].setBackground(Color.PINK); // Set button background color
+                buttons[row][col].setFont(new Font("Serif", Font.PLAIN, 60));
+                buttons[row][col].setFocusPainted(false);
+                buttons[row][col].setBackground(Color.PINK);
                 buttons[row][col].setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 
                 buttons[row][col].addActionListener((ActionEvent ae) -> {
-                    JButton buttonClicked = (JButton) ae.getSource(); // Get the button that was clicked
+                    JButton buttonClicked = (JButton) ae.getSource();
                     if (buttonClicked.getText().equals(" ")) {
                         String currentPlayerSymbol = currentPlayer ? "X" : "O";
-                        buttonClicked.setText(currentPlayerSymbol); // Set text to "X" for Player 1 or "O" for Player 2
-                        moveCnt++; // Increment move count
+                        buttonClicked.setText(currentPlayerSymbol);
+                        moveCnt++;
 
-                        // Check if there's a win
                         if (isWin(currentPlayerSymbol)) {
                             JOptionPane.showMessageDialog(gridPanel, "Player " + currentPlayerSymbol + " Won!");
-                            disableAllButtons(); // Disable further moves
+                            disableAllButtons();
                             if (getYNConfirm("Do you want to play again?")) {
-                                resetGame(); // Reset the game if yes
+                                resetGame();
                             } else {
-                                System.exit(0); // End the game if no
+                                System.exit(0);
                             }
 
                         }
                         else if (isTie()) {
                             JOptionPane.showMessageDialog(gridPanel, "It's a Tie!");
-                            disableAllButtons(); // Disable further moves
+                            disableAllButtons();
                             if (getYNConfirm("Do you want to play again?")) {
-                                resetGame(); // Reset the game if yes
+                                resetGame();
                             }
                             else {
                                 System.exit(0);
@@ -99,7 +98,7 @@ public class TicTacToeFrame extends JFrame {
                         }
 
 
-                        currentPlayer = !currentPlayer; // Switch turns
+                        currentPlayer = !currentPlayer;
                     }
                 });
                 gridPanel.add(buttons[row][col]);
@@ -117,27 +116,27 @@ public class TicTacToeFrame extends JFrame {
         return false;
     }
     private boolean isColWin(String player) {
-        // checks for a col win for specified player
+
         for (int col = 0; col < COL; col++) {
             if (buttons[0][col].getText().equals(player) && buttons[1][col].getText().equals(player) && buttons[2][col].getText().equals(player)) {
                 return true;
             }
         }
-        return false; // no col win
+        return false;
     }
 
     private boolean isRowWin(String player) {
-        // checks for a row win for the specified player
+
         for (int row = 0; row < ROW; row++) {
             if (buttons[row][0].getText().equals(player) && buttons[row][1].getText().equals(player) && buttons[row][2].getText().equals(player)) {
                 return true;
             }
         }
-        return false; // no row win
+        return false;
     }
 
     private boolean isDiagonalWin(String player) {
-        // checks for a diagonal win for the specified player
+
         if (buttons[0][0].getText().equals(player) && buttons[1][1].getText().equals(player) && buttons[2][2].getText().equals(player)) {
             return true;
         }
@@ -146,7 +145,7 @@ public class TicTacToeFrame extends JFrame {
         }
         return false;
     }
-    // Method to check if the game is a tie
+
     private boolean isTie()
     {
         if (moveCnt < 7) {
@@ -154,23 +153,21 @@ public class TicTacToeFrame extends JFrame {
         }
         boolean xFlag = false;
         boolean oFlag = false;
-        // Check all 8 win vectors for an X and O so
-        // no win is possible
-        // Check for row ties
+
         for(int row=0; row < ROW; row++)
         {
             if(buttons[row][0].getText().equals("X") || buttons[row][1].getText().equals("X") || buttons[row][2].getText().equals("X"))
             {
-                xFlag = true; // there is an X in this row
+                xFlag = true;
             }
             if(buttons[row][0].getText().equals("O") || buttons[row][1].getText().equals("O") || buttons[row][2].getText().equals("O"))
             {
-                oFlag = true; // there is an O in this row
+                oFlag = true;
             }
 
             if(! (xFlag && oFlag) )
             {
-                return false; // No tie can still have a row win
+                return false;
             }
 
             xFlag = oFlag = false;
@@ -181,19 +178,19 @@ public class TicTacToeFrame extends JFrame {
         {
             if(buttons[0][col].getText().equals("X") || buttons[1][col].getText().equals("X") || buttons[2][col].getText().equals("X"))
             {
-                xFlag = true; // there is an X in this col
+                xFlag = true;
             }
             if(buttons[0][col].getText().equals("O") || buttons[1][col].getText().equals("O") || buttons[2][col].getText().equals("O"))
             {
-                oFlag = true; // there is an O in this col
+                oFlag = true;
             }
 
             if(! (xFlag && oFlag) )
             {
-                return false; // No tie can still have a col win
+                return false;
             }
         }
-        // Now check for the diagonals
+
         xFlag = oFlag = false;
 
         if(buttons[0][0].getText().equals("X") || buttons[1][1].getText().equals("X") || buttons[2][2].getText().equals("X") )
@@ -206,7 +203,7 @@ public class TicTacToeFrame extends JFrame {
         }
         if(! (xFlag && oFlag) )
         {
-            return false; // No tie can still have a diag win
+            return false;
         }
         xFlag = oFlag = false;
 
@@ -220,25 +217,24 @@ public class TicTacToeFrame extends JFrame {
         }
         if(! (xFlag && oFlag) )
         {
-            return false; // No tie can still have a diag win
+            return false;
         }
 
-        // Checked every vector so I know I have a tie
         return true;
     }
 
     private boolean getYNConfirm(String message) {
         int result = JOptionPane.showConfirmDialog(this, message, "Confirm", JOptionPane.YES_NO_OPTION);
-        return result == JOptionPane.YES_OPTION; // Return true if they selected "Yes"
+        return result == JOptionPane.YES_OPTION;
     }
 
     private void resetGame() {
-        moveCnt = 0; // Reset move count
-        currentPlayer = true; // Reset current player to the first player (X)
+        moveCnt = 0;
+        currentPlayer = true;
         for (int row = 0; row < ROW; row++) {
             for (int col = 0; col < COL; col++) {
-                buttons[row][col].setText(" "); // Clear button text
-                buttons[row][col].setEnabled(true); // Re-enable buttons
+                buttons[row][col].setText(" ");
+                buttons[row][col].setEnabled(true);
             }
         }
     }
